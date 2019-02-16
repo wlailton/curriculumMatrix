@@ -1,5 +1,6 @@
 package com.wlailton.curriculumMatrixapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,6 +32,7 @@ public class User {
 
 	@NotNull
 	@Email
+	@Column(unique = true)
 	private String email;
 
 	@NotNull

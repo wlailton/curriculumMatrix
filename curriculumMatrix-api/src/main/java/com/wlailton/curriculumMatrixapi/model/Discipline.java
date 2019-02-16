@@ -3,27 +3,30 @@ package com.wlailton.curriculumMatrixapi.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
-public class Course {
+@JsonInclude(Include.NON_NULL)
+public class Discipline {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
 	@NotNull
 	@Size(min = 3, max = 250)
 	private String name;
-	
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private Set<Semester> semesters = new HashSet<>();
+
+	@ManyToMany(mappedBy = "disciplines")
+	private Set<Semester> semesters = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -39,6 +42,14 @@ public class Course {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Semester> getSemesters() {
+		return semesters;
+	}
+
+	public void setSemesters(Set<Semester> semesters) {
+		this.semesters = semesters;
 	}
 
 }
