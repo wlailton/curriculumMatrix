@@ -1,0 +1,74 @@
+package com.wlailton.curriculumMatrixapi.controllers;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import com.wlailton.curriculumMatrixapi.AbstractMvcTest;
+import com.wlailton.curriculumMatrixapi.model.Course;
+import com.wlailton.curriculumMatrixapi.repositories.CourseRepository;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class CourseControllerTest extends AbstractMvcTest {
+
+	@Autowired
+	private CourseRepository courseRepository;
+
+	@Test
+	public void contexLoads() throws Exception {
+		assertThat(courseRepository).isNotNull();
+	}
+
+	@Test
+	public void getCourseNotExistCnpj() throws Exception {
+		Course course = new Course();
+		course.setName("Course Test");
+		String requestJson = castObjectToJson(course);
+
+		mockMvc.perform(put("/api/course/23").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
+				.andDo(print()).andExpect(status().is(404));
+	}
+
+	@Test
+	public void createtNewCourseAndGetAndUpdateAndDelete() throws Exception {
+
+		Course course = new Course();
+		course.setId(1L);
+		course.setName("Course Test");
+
+		String requestJson = castObjectToJson(course);
+
+		mockMvc.perform(post("/api/course/").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
+				.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+
+		mockMvc.perform(get("/api/course/" + course.getId())).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+
+		course.setName("Course Update");
+		requestJson = castObjectToJson(course);
+
+		mockMvc.perform(put("/api/course/" + course.getId().toString()).contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(requestJson)).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(course.getName()));
+
+		mockMvc.perform(delete("/api/course/" + course.getId())).andDo(print()).andExpect(status().isOk());
+	}
+}
