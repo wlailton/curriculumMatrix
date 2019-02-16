@@ -56,7 +56,7 @@ public class CourseController {
 	public Course updateCourse(@PathVariable String id, @Valid @RequestBody Course courseUpdated) {
 		courseRepository.findById(Long.parseLong(id))
 				.orElseThrow(() -> new CourseNotFoundException(id));
-		
+		courseUpdated.setId(Long.parseLong(id));
 		return courseRepository.save(courseUpdated);
 	}
 
