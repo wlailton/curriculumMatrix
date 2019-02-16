@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.wlailton.curriculumMatrixapi.AbstractMvcTest;
@@ -36,13 +38,17 @@ public class CourseControllerTest extends AbstractMvcTest {
 	}
 
 	@Test
-	public void getCourseNotExistCnpj() throws Exception {
+	public void getCourseNotExistId() throws Exception {
+
+		mockMvc.perform(get("/api/course/999")).andDo(print()).andExpect(status().is(404));
+
 		Course course = new Course();
 		course.setName("Course Test");
 		String requestJson = castObjectToJson(course);
 
-		mockMvc.perform(put("/api/course/23").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
+		mockMvc.perform(put("/api/course/999").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
 				.andDo(print()).andExpect(status().is(404));
+
 	}
 
 	@Test
@@ -54,10 +60,13 @@ public class CourseControllerTest extends AbstractMvcTest {
 
 		String requestJson = castObjectToJson(course);
 
-		mockMvc.perform(post("/api/course/").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
+		MvcResult result = mockMvc.perform(post("/api/course/").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
 				.andDo(print()).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
-
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8)).andReturn();
+		
+		JSONObject jsonObject = new JSONObject(result.getResponse().getContentAsString());
+		course.setId(jsonObject.getLong("id"));
+		
 		mockMvc.perform(get("/api/course/" + course.getId())).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 

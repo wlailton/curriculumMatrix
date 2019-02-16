@@ -22,22 +22,23 @@ public class CourseController {
 
 	@Autowired
 	private CourseRepository courseRepository;
-	
+
 	/**
 	 * Get a course.
-	 */	
+	 */
 	@GetMapping("/{id}")
 	public Course getCourse(@PathVariable String id) {
 		return courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
 
 	}
-	
+
 	/**
 	 * Delete a course.
-	 */	
+	 */
 	@DeleteMapping("/{id}")
 	public void deleteCourse(@PathVariable String id) {
-		courseRepository.deleteById(Long.parseLong(id)); 
+		courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
+		courseRepository.deleteById(Long.parseLong(id));
 
 	}
 
@@ -54,8 +55,7 @@ public class CourseController {
 	 */
 	@PutMapping("/{id}")
 	public Course updateCourse(@PathVariable String id, @Valid @RequestBody Course courseUpdated) {
-		courseRepository.findById(Long.parseLong(id))
-				.orElseThrow(() -> new CourseNotFoundException(id));
+		courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
 		courseUpdated.setId(Long.parseLong(id));
 		return courseRepository.save(courseUpdated);
 	}

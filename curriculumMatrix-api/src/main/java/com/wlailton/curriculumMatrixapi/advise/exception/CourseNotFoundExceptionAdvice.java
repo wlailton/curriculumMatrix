@@ -14,7 +14,7 @@ public class CourseNotFoundExceptionAdvice {
 	@ResponseBody
 	@ExceptionHandler(CourseNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String incidentNotFoundHandler(CourseNotFoundException ex) {
+	String courseNotFoundHandler(CourseNotFoundException ex) {
 		return ex.getMessage();
 	}
 
