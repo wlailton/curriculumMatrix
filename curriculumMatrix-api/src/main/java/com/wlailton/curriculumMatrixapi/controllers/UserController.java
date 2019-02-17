@@ -3,7 +3,7 @@ package com.wlailton.curriculumMatrixapi.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,7 @@ import com.wlailton.curriculumMatrixapi.repositories.UserRepository;
 
 @RestController
 @RequestMapping("api/user")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
 	@Autowired
@@ -28,7 +29,6 @@ public class UserController {
 	 * Create a new user.
 	 */	
 	@PostMapping("/")
-	@Secured({"ROLE_ADMIN"})
 	public User createUser(@Valid @RequestBody User user) {
 		return userRepository.save(user);
 	}
@@ -37,7 +37,6 @@ public class UserController {
 	 * Get a user.
 	 */
 	@GetMapping("/{id}")
-	@Secured({"ROLE_ADMIN"})
 	public User getUser(@PathVariable String id) {
 		return userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
 
@@ -47,7 +46,6 @@ public class UserController {
 	 * Update a user.
 	 */
 	@PutMapping("/{id}")
-	@Secured({"ROLE_ADMIN"})
 	public User updateUser(@PathVariable String id, @Valid @RequestBody User userUpdated) {
 		userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
 		userUpdated.setId(Long.parseLong(id));
@@ -58,7 +56,6 @@ public class UserController {
 	 * Delete a user.
 	 */
 	@DeleteMapping("/{id}")
-	@Secured({"ROLE_ADMIN"})
 	public void deleteUser(@PathVariable String id) {
 		userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
 		userRepository.deleteById(Long.parseLong(id));

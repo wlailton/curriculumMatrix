@@ -1,5 +1,5 @@
 package com.wlailton.curriculumMatrixapi.enums;
 
 public enum RoleNameEnum {
-	ADMIN, COORDINATOR, PROFESSOR, STUDENT;
+	ROLE_ADMIN, ROLE_COORDINATOR, ROLE_PROFESSOR, ROLE_STUDENT;
 }
