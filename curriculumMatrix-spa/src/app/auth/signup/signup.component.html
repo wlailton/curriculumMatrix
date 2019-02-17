@@ -1,0 +1,45 @@
+<div class="container">
+    <h4 class="mt-2">Signup</h4>
+    <form [formGroup]="signupForm" (submit)="signup()" class="form mt-2">
+        
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input formControlName="name"  type="text" class="form-control" autofocus>
+            <small *ngIf="signupForm.get('name').errors?.required">"Name is required!"</small>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input formControlName="username"  type="text" class="form-control">
+            <small *ngIf="signupForm.get('username').errors?.required">"Username is required!"</small>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input formControlName="email"  type="email" class="form-control">
+            <small *ngIf="signupForm.get('email').errors?.required">"Email is required!"</small>
+        </div>
+        <div class="form-group">
+            <label for="roles">Roles</label>
+            <div class="checkbox">
+                <label><input type="checkbox" value="admin" (change)="roleSelected($event)">Admin</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="coordinator" (change)="roleSelected($event)">Coordinator</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="professor" (change)="roleSelected($event)">Professor</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="student" (change)="roleSelected($event)">Student</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input #password formControlName="password" type="password" class="form-control">
+            <small *ngIf="signupForm.get('password').errors?.required">"Password is required!"</small>
+        </div>
+        <button [disabled]="signupForm.invalid || (roles.length == 0)" type="submit" class="btn btn-primary">Signup</button>
+    </form>
+  </div>
