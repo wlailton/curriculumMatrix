@@ -6,24 +6,19 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wlailton.curriculumMatrixapi.enums.RoleNameEnum;
-import com.wlailton.curriculumMatrixapi.exception.UserNotFoundException;
 import com.wlailton.curriculumMatrixapi.model.Role;
 import com.wlailton.curriculumMatrixapi.model.User;
 import com.wlailton.curriculumMatrixapi.repositories.RoleRepository;
@@ -52,22 +47,12 @@ public class AuthController {
  
     @Autowired
     JwtProvider jwtProvider;
-    
-    /**
-	 * Get a user.
-	 */
-	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public User getUser(@PathVariable String id) {
-		return userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
-
-	}
 
 	/**
 	 * User signin.
 	 */
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
  
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -86,15 +71,13 @@ public class AuthController {
 	 * User signin.
 	 */
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity<String>("Username is already taken!",
-                    HttpStatus.BAD_REQUEST);
+        	new RuntimeException("Username is already taken!");
         }
  
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<String>("Email is already in use!",
-                    HttpStatus.BAD_REQUEST);
+        	new RuntimeException("Email is already in use!");
         }
  
         // Creating user's account
@@ -134,6 +117,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
  
-        return ResponseEntity.ok().body("User registered successfully!");
+        return ResponseEntity.ok().body(user);
     }
 }
