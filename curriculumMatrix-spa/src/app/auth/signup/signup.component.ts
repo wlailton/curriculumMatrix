@@ -41,15 +41,16 @@ export class SignupComponent implements OnInit {
  }
 
   signup() {
-    
     const user = this.signupForm.getRawValue() as UserSignup;
     user.role = this.roles;
-    
 
     this.authService
     .signup(user)
     .subscribe(
-        () => alert('Usuário criado com sucesso'),
+        () => {
+          alert('User created successfully!');
+          this.router.navigate([''])
+        },
         err => {
           alert('Error signing up!');
         }
