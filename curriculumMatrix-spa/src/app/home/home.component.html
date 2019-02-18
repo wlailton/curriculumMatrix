@@ -1,11 +1,27 @@
 <div class="container">
     <h4 class="mt-2">Home</h4>
 
-    <div class="card" style="width: 18rem;">
+    <div  *ngIf="hasRoleAdmin" class="card mt-2" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Users</h5>
+          
+        </div>
+    </div>
+
+    <div  *ngIf="hasRoleCoordinator" class="card mt-2" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">Courses</h5>
           <div class="text-center"> 
             <a [routerLink]="['']" class="btn btn-primary">New</a>
+          </div>
+        </div>
+    </div>
+
+    <div  *ngIf="hasRoleProfessor || hasRoleStudent" class="card mt-2" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Curriculum Matriz</h5>
+          <div class="text-center"> 
+
           </div>
         </div>
     </div>

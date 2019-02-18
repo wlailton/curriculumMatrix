@@ -1,3 +1,4 @@
 export interface User {
-    login: string
+    sub: string
+    roles: any[]
 }
