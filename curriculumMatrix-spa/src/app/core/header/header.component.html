@@ -1,0 +1,12 @@
+<header class="sticky-top">
+    <nav class="navbar navbar-light bg-white">
+        <a class="navbar-brand">Curriculim Matrix</a>
+        
+        <div *ngIf="(user$ | async) as user; else login">
+            <i class="fa fa-user-circle mr-1"></i>
+            <a class="mr-1">{{ user.sub }}</a>
+            <a (click)="logout()">(Logout)</a>
+        </div>
+
+    </nav>
+</header>
