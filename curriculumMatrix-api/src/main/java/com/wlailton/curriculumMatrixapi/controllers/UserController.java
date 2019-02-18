@@ -32,33 +32,33 @@ public class UserController {
 	public User createUser(@Valid @RequestBody User user) {
 		return userRepository.save(user);
 	}
-
+	
 	/**
 	 * Get a user.
 	 */
-	@GetMapping("/{id}")
-	public User getUser(@PathVariable String id) {
-		return userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
+	@GetMapping("/{username}")
+	public User getUserByUsername(@PathVariable String username) {
+		return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
 
 	}
 
 	/**
 	 * Update a user.
 	 */
-	@PutMapping("/{id}")
-	public User updateUser(@PathVariable String id, @Valid @RequestBody User userUpdated) {
-		userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
-		userUpdated.setId(Long.parseLong(id));
+	@PutMapping("/{username}")
+	public User updateUserByUsername(@PathVariable String username, @Valid @RequestBody User userUpdated) {
+		User userOld = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+		userUpdated.setId(userOld.getId());
 		return userRepository.save(userUpdated);
 	}
 
 	/**
 	 * Delete a user.
 	 */
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable String id) {
-		userRepository.findById(Long.parseLong(id)).orElseThrow(() -> new UserNotFoundException(id));
-		userRepository.deleteById(Long.parseLong(id));
+	@DeleteMapping("/{username}")
+	public void deleteUserByUsername(@PathVariable String username) {
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+		userRepository.deleteById(user.getId());
 
 	}
 

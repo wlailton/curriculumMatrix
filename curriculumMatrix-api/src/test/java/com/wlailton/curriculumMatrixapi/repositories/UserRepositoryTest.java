@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.wlailton.curriculumMatrixapi.enums.UserTypeEnum;
 import com.wlailton.curriculumMatrixapi.exception.UserNotFoundException;
 import com.wlailton.curriculumMatrixapi.model.User;
 
@@ -26,10 +25,10 @@ public class UserRepositoryTest {
 	@Test
 	public void whenFindByIdThenReturnUser() {
 		User user = new User();
-		user.setName("Test");
-		user.setPassword("test");
-		user.setEmail("teste@xpto.com");
-		user.setUserType(UserTypeEnum.PROFESSOR);
+		user.setName("Test JUnit");
+		user.setUsername("testjunit");
+		user.setPassword("testjunit");
+		user.setEmail("testjunit@xpto.com");
 	
 		entityManager.persist(user);
 		entityManager.flush();
@@ -40,7 +39,6 @@ public class UserRepositoryTest {
 		assertThat(userFound.getName()).isEqualTo(user.getName());
 		assertThat(userFound.getPassword()).isEqualTo(userFound.getPassword());
 		assertThat(userFound.getEmail()).isEqualTo(userFound.getEmail());
-		assertThat(userFound.getUserType()).isEqualTo(userFound.getUserType());
 		
 	}
 
