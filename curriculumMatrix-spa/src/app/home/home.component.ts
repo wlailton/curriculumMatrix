@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../core/user/user.service';
 @Component({
@@ -15,16 +16,19 @@ export class HomeComponent implements OnInit {
   private roles = [];
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.roles = this.userService.getUserRoles();
+
     this.hasRoleAdmin = this.hasRole('ROLE_ADMIN');
     this.hasRoleCoordinator = this.hasRole('ROLE_COORDINATOR');
     this.hasRoleProfessor = this.hasRole('ROLE_PROFESSOR');
     this.hasRoleStudent = this.hasRole('ROLE_STUDENT');
-    
+
+    this.routeRedirect();
   }
 
   hasRole(roleTest:string) {
@@ -34,6 +38,12 @@ export class HomeComponent implements OnInit {
           test = true
       });
     return test;
+  }
+
+  routeRedirect(){
+    if((this.hasRoleProfessor || this.hasRoleStudent) && !this.hasRoleCoordinator && !this.hasRoleAdmin) {
+      this.router.navigate(['courses']);
+    }
   }
 
 }

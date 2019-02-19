@@ -12,7 +12,12 @@ export class CourseService {
 
     getCourse(id: string) {
         return this.http
-            .get<Course>('http://localhost:8080/api/course/'+ id);
+            .get<Course>('http://localhost:8080/api/course/' + id);
+    }
+
+    getCoursesHasMatrix(year: string) {
+        return this.http
+            .get<any[]>('http://localhost:8080/api/course/has/matrix/' + year);
     }
 
     getCourseMatrix(year: string, courseId: string) {

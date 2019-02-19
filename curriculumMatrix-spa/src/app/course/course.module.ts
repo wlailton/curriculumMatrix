@@ -5,11 +5,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CourseComponent } from './course/course.component';
 import { MatrixComponent } from './matrix/matrix.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
     declarations: [
         CourseComponent,
-        MatrixComponent
+        MatrixComponent,
+        CoursesComponent
     ],
     imports: [
         CommonModule,

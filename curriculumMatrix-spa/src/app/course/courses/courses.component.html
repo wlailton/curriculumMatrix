@@ -1,0 +1,9 @@
+<div class="container">
+  <h4 class="mt-2">Courses</h4>
+  
+  <div class="list-group">
+    <div *ngFor="let course of courses">
+        <a class="list-group-item list-group-item-action mt-2" [routerLink]="['../course/matrix/', course[0] ]">{{ course[1] }}</a>
+      </div>
+  </div>
+</div>

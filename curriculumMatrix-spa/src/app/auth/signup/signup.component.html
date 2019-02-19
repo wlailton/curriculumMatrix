@@ -1,5 +1,6 @@
 <div class="container">
     <h4 class="mt-2">Signup</h4>
+    <hr>
     <form [formGroup]="signupForm" (submit)="signup()" class="form mt-2">
         
         <div class="form-group">
@@ -22,16 +23,16 @@
         <div class="form-group">
             <label for="roles">Roles</label>
             <div class="checkbox">
-                <label><input type="checkbox" value="admin" (change)="roleSelected($event)">Admin</label>
+                <label><input type="checkbox" value="admin" (change)="roleSelected($event)"> Admin</label>
             </div>
             <div class="checkbox">
-                <label><input type="checkbox" value="coordinator" (change)="roleSelected($event)">Coordinator</label>
+                <label><input type="checkbox" value="coordinator" (change)="roleSelected($event)"> Coordinator</label>
             </div>
             <div class="checkbox">
-                <label><input type="checkbox" value="professor" (change)="roleSelected($event)">Professor</label>
+                <label><input type="checkbox" value="professor" (change)="roleSelected($event)"> Professor</label>
             </div>
             <div class="checkbox">
-                <label><input type="checkbox" value="student" (change)="roleSelected($event)">Student</label>
+                <label><input type="checkbox" value="student" (change)="roleSelected($event)"> Student</label>
             </div>
         </div>
 
