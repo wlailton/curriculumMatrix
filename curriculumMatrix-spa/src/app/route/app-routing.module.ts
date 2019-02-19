@@ -7,6 +7,7 @@ import { HomeComponent } from '../home/home.component';
 import { MatrixComponent } from '../course/matrix/matrix.component';
 import { CoursesComponent } from '../course/courses/courses.component';
 import { AuthGuard } from './auth.guard';
+import { AccessGuard } from './access.guard';
 import { IsLoggedGuard } from './is-logged.guard';
 
 const routes: Routes = [
@@ -32,12 +33,12 @@ const routes: Routes = [
     { 
       path: 'courses', 
       component: CoursesComponent,
-      canActivate: [IsLoggedGuard]
+      canActivate: [IsLoggedGuard, AccessGuard]
     },
     { 
       path: 'course/matrix/:courseId', 
       component: MatrixComponent,
-      canActivate: [IsLoggedGuard]
+      canActivate: [IsLoggedGuard, AccessGuard]
     }
   ];
   @NgModule({

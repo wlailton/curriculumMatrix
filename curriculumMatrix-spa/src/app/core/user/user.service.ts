@@ -9,8 +9,13 @@ import { User } from './user';
 export class UserService {
 
     private userSubjet = new BehaviorSubject<User>(null);
-    private username: string;
+    private name: string;
     private userRoles: any[];
+
+    hasRoleAdmin: boolean = false;
+    hasRoleCoordinator: boolean = false;
+    hasRoleProfessor: boolean = false;
+    hasRoleStudent: boolean = false;
 
     constructor(
         private tokenService: TokenService
@@ -36,9 +41,8 @@ export class UserService {
     isLogged() {
         return this.tokenService.hasToken();
     }
-
-    getUserName() {
-        return this.username;
+    getName() {
+        return this.name;
     }
     getUserRoles() {
         return this.userRoles;
@@ -47,8 +51,26 @@ export class UserService {
     private decodeAndNotify() {
         const token = this.tokenService.getToken();
         const user = jwt_decode(token) as User;
-        this.username = user.sub;
+        this.name = user.name;
         this.userRoles = user.roles;
+        this.loadAccess();
         this.userSubjet.next(user);
     }
+    
+    loadAccess() {
+        this.hasRoleAdmin = this.hasRole('ROLE_ADMIN');
+        this.hasRoleCoordinator = this.hasRole('ROLE_COORDINATOR');
+        this.hasRoleProfessor = this.hasRole('ROLE_PROFESSOR');
+        this.hasRoleStudent = this.hasRole('ROLE_STUDENT');
+    }
+
+    hasRole(roleTest:string) {
+        let test: boolean = false;
+        this.userRoles.forEach(role => {
+            if(role.authority === roleTest)
+              test = true
+          });
+        return test;
+      }
+
 }
