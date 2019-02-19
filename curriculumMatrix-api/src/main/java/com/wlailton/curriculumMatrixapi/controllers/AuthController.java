@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wlailton.curriculumMatrixapi.config.ApiResponse;
 import com.wlailton.curriculumMatrixapi.enums.RoleNameEnum;
 import com.wlailton.curriculumMatrixapi.model.Role;
 import com.wlailton.curriculumMatrixapi.model.User;
@@ -71,13 +73,15 @@ public class AuthController {
 	 * User signin.
 	 */
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-        	new RuntimeException("Username is already taken!");
+        	return new ResponseEntity<>(new ApiResponse(false, "Cause: Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
         }
  
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-        	new RuntimeException("Email is already in use!");
+        	return new ResponseEntity<>(new ApiResponse(false, "Cause: Email Address already in use!"),
+                    HttpStatus.BAD_REQUEST);
         }
  
         // Creating user's account
@@ -91,32 +95,37 @@ public class AuthController {
         	switch(role) {
 	    		case "admin":
 	    			Role adminRole = roleRepository.findByName(RoleNameEnum.ROLE_ADMIN)
-	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find."));
+	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find!"));
 	    			roles.add(adminRole);
-	    			
+
 	    			break;
 	    		case "coordinator":
 	            	Role coordinatorRole = roleRepository.findByName(RoleNameEnum.ROLE_COORDINATOR)
-	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find."));
+	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find!"));
 	            	roles.add(coordinatorRole);
 	            	
 	    			break;
 	    		case "professor":
 	            	Role professorRole = roleRepository.findByName(RoleNameEnum.ROLE_PROFESSOR)
-	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find."));
+	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find!"));
 	            	roles.add(professorRole);
 	            	
 	    			break;
-	    		default:
-	        		Role studentRole = roleRepository.findByName(RoleNameEnum.ROLE_STUDENT)
-	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find."));
-	        		roles.add(studentRole);        			
+	    		case "student":
+	            	Role studentRole = roleRepository.findByName(RoleNameEnum.ROLE_STUDENT)
+	                .orElseThrow(() -> new RuntimeException("Cause: User Role not find!"));
+	            	roles.add(studentRole);
+	            	
+	    			break;
         	}
         });
+        if(roles.isEmpty())
+        	return new ResponseEntity<>(new ApiResponse(false, "Cause: User Role not find!"), HttpStatus.BAD_REQUEST);
+        else
+        	user.setRoles(roles);
         
-        user.setRoles(roles);
         userRepository.save(user);
  
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(new ApiResponse(true, "User registered successfully!"));
     }
 }

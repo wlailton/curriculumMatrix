@@ -16,10 +16,10 @@ public class JwtProvider {
  
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
  
-    @Value("jwtyyouiyezuiououKey")
+    @Value("${curriculumMatrix.app.jwtSecret}")
     private String jwtSecret;
  
-    @Value("860000000")
+    @Value("${curriculumMatrix.app.jwtExpiration}")
     private int jwtExpiration;
  
     public String generateJwtToken(Authentication authentication) {
@@ -27,21 +27,22 @@ public class JwtProvider {
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
         Claims claims = Jwts.claims().setSubject(userPrincipal.getUsername());
         claims.put("roles", userPrincipal.getAuthorities());
+        claims.put("name", userPrincipal.getName());
         
         return Jwts.builder()
-        				.setClaims(claims)
-		                .setSubject((userPrincipal.getUsername()))
-		                .setIssuedAt(new Date())
-		                .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
-		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-		                .compact();
+				.setClaims(claims)
+	            .setSubject((userPrincipal.getUsername()))
+	            .setIssuedAt(new Date())
+	            .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
+	            .signWith(SignatureAlgorithm.HS512, jwtSecret)
+	            .compact();
     }
  
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser()
-			                .setSigningKey(jwtSecret)
-			                .parseClaimsJws(token)
-			                .getBody().getSubject();
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
     }
  
     public boolean validateJwtToken(String authToken) {

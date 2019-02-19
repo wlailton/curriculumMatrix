@@ -22,7 +22,6 @@ import com.wlailton.curriculumMatrixapi.repositories.CourseRepository;
 
 @RestController
 @RequestMapping("/api/course")
-@PreAuthorize("hasRole('STUDENT')")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseController {
 
@@ -33,6 +32,7 @@ public class CourseController {
 	 * Get a course.
 	 */
 	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('COORDINATOR')")
 	public Course getCourse(@PathVariable String id) {
 		return courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
 
@@ -42,6 +42,7 @@ public class CourseController {
 	 * Delete a course.
 	 */
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('COORDINATOR')")
 	public void deleteCourse(@PathVariable String id) {
 		courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
 		courseRepository.deleteById(Long.parseLong(id));
@@ -52,6 +53,7 @@ public class CourseController {
 	 * Create a new course.
 	 */
 	@PostMapping("/")
+	@PreAuthorize("hasRole('COORDINATOR')")
 	public Course createCourse(@Valid @RequestBody Course course) {
 		return courseRepository.save(course);
 	}
@@ -60,6 +62,7 @@ public class CourseController {
 	 * Update a course.
 	 */
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('COORDINATOR')")
 	public Course updateCourse(@PathVariable String id, @Valid @RequestBody Course courseUpdated) {
 		courseRepository.findById(Long.parseLong(id)).orElseThrow(() -> new CourseNotFoundException(id));
 		courseUpdated.setId(Long.parseLong(id));
@@ -70,6 +73,7 @@ public class CourseController {
 	 * Get a curriculum matrix.
 	 */
 	@GetMapping("/matrix/{year}/{courseId}")
+	@PreAuthorize("hasRole('STUDENT') or hasRole('PROFESSOR')")
 	public List<Course> getCurriculumMatrix(@PathVariable("year") String year, @PathVariable("courseId") String courseId) {
 		return courseRepository.findCurriculumMatrix(Long.parseLong(year), Long.parseLong(courseId)).orElseThrow(() -> new CourseNotFoundException(courseId));
 
@@ -78,7 +82,8 @@ public class CourseController {
 	/**
 	 * Get list courses has curriculum matrix.
 	 */
-	@GetMapping("/matrix/has/{year}")
+	@GetMapping("/has/matrix/{year}")
+	@PreAuthorize("hasRole('STUDENT') or hasRole('PROFESSOR')")
 	public List<Course> getCoursesHasCurriculumMatrix(@PathVariable("year") String year) {
 		return courseRepository.findCoursesHasMatrix(Long.parseLong(year)).orElseThrow(() -> new CourseNotFoundException(year));
 

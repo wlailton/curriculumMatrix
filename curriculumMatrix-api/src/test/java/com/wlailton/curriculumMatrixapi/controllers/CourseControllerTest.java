@@ -60,7 +60,6 @@ public class CourseControllerTest extends AbstractMvcTest {
 	public void createtNewCourseAndGetAndUpdateAndDelete() throws Exception {
 
 		Course course = new Course();
-		course.setId(1L);
 		course.setName("Course Test");
 
 		String requestJson = castObjectToJson(course);

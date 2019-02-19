@@ -1,6 +1,7 @@
+-- Courses
 insert into COURSE(id, name) values(1,'Ciência da Computação');
 insert into COURSE(id, name) values(2,'Sistemas de Informação');
-
+-- Semesters
 insert into SEMESTER(id, semester_number, year, course_id) values(1, 1, 2019, 1);
 insert into SEMESTER(id, semester_number, year, course_id) values(2, 2, 2019, 1);
 insert into SEMESTER(id, semester_number, year, course_id) values(3, 3, 2019, 1);
@@ -10,7 +11,7 @@ insert into SEMESTER(id, semester_number, year, course_id) values(5, 1, 2019, 2)
 insert into SEMESTER(id, semester_number, year, course_id) values(6, 2, 2019, 2);
 insert into SEMESTER(id, semester_number, year, course_id) values(7, 3, 2019, 2);
 insert into SEMESTER(id, semester_number, year, course_id) values(8, 4, 2019, 2);
-
+-- Diciplines
 insert into DISCIPLINE(id, name) values(1, 'Algoritmo');
 insert into DISCIPLINE(id, name) values(2, 'Banco de Dados');
 insert into DISCIPLINE(id, name) values(3, 'Cáldulo 1');
@@ -27,8 +28,7 @@ insert into DISCIPLINE(id, name) values(13, 'Interação humano-computador');
 insert into DISCIPLINE(id, name) values(14, 'Programação orient. objetos');
 insert into DISCIPLINE(id, name) values(15, 'Res. problemas nat. discreta');
 insert into DISCIPLINE(id, name) values(16, 'Arquitetura de computadores');
-
-
+--Semester Diciplines
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(1, 1);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(1, 2);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(1, 3);
@@ -45,20 +45,18 @@ insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 13);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 14);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 15);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 16);
-
-insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(5, 16);
-
+-- Roles
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 INSERT INTO roles(name) VALUES('ROLE_COORDINATOR');
 INSERT INTO roles(name) VALUES('ROLE_PROFESSOR');
 INSERT INTO roles(name) VALUES('ROLE_STUDENT');
-
+-- User test
 INSERT INTO users(email, name, password, username) VALUES('usertest@xpto.com', 'User Test', '123456', 'usertest');
---INSERT INTO user_roles(user_id, role_id) values(1,1);
+INSERT INTO user_roles(user_id, role_id) values(1,1);
 INSERT INTO user_roles(user_id, role_id) values(1,2);
 INSERT INTO user_roles(user_id, role_id) values(1,3);
 INSERT INTO user_roles(user_id, role_id) values(1,4);
-
+-- Queries
 /*
 SELECT c.name
      , s.semester_number
