@@ -1,29 +1,44 @@
 <div class="container">
-    <h4 class="mt-2">Home</h4>
+    <h4 class="mt-2">Home Page</h4>
 
-    <div  *ngIf="hasRoleAdmin" class="card mt-2" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Users</h5>
-          
-        </div>
-    </div>
-
-    <div  *ngIf="hasRoleCoordinator" class="card mt-2" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Courses</h5>
-          <div class="text-center"> 
-            <a [routerLink]="['']" class="btn btn-primary">New</a>
+    <div class="row text-center justify-content-center mt-2" *ngIf="hasRoleAdmin">
+      <div class="col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body ">
+            <h4 class="card-title">Courses</h4>
+            <div class="text-center">
+              <a [routerLink]="['']" class="btn btn-primary">New</a>
+            </div>
           </div>
         </div>
+      </div>
     </div>
 
-    <div  *ngIf="hasRoleProfessor || hasRoleStudent" class="card mt-2" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Curriculum Matriz</h5>
-          <div class="text-center"> 
-
+    <div class="row text-center justify-content-center mt-2" *ngIf="hasRoleCoordinator">
+      <div class="col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body ">
+            <h4 class="card-title">Courses</h4>
+            <div class="text-center">
+              <a [routerLink]="['']" class="btn btn-primary">New</a>
+            </div>
           </div>
         </div>
+      </div>
     </div>
+
+    <div class="row text-center justify-content-center mt-2" *ngIf="hasRoleProfessor || hasRoleStudent">
+      <div class="col-sm-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Curriculum Matriz</h4>
+            <div class="text-center">
+              <a [routerLink]="['']" class="btn btn-primary">Visualize</a>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 </div>

@@ -1,0 +1,43 @@
+<div class="container">
+    <h4 class="mt-2">Curriculum Matrix</h4>
+    <hr>
+    <h5>{{getCourseName()}} - {{year}}</h5>
+    <hr>
+    
+    <div class="list-group-flush">
+      <a class="list-group-item list-group-item-action bg-secondary text-white"> Semester 1</a>
+      <div *ngFor="let item of matrix">
+        <div *ngIf="item[2] == 1">
+          <a class="list-group-item list-group-item-action">{{item[3]}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-group-flush">
+      <a class="list-group-item list-group-item-action bg-secondary text-white"> Semester 2</a>
+      <div *ngFor="let item of matrix">
+        <div *ngIf="item[2] == 2">
+          <a class="list-group-item list-group-item-action">{{item[3]}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-group-flush">
+      <a class="list-group-item list-group-item-action bg-secondary text-white"> Semester 3</a>
+      <div *ngFor="let item of matrix">
+        <div *ngIf="item[2] == 3">
+          <a class="list-group-item list-group-item-action">{{item[3]}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-group-flush">
+      <a class="list-group-item list-group-item-action bg-secondary text-white"> Semester 4</a>
+      <div *ngFor="let item of matrix">
+        <div *ngIf="item[2] == 4">
+          <a class="list-group-item list-group-item-action">{{item[3]}}</a>
+        </div>
+      </div>
+    </div>
+</div>
+

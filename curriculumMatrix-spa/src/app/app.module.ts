@@ -7,17 +7,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './route/app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { CourseModule } from './course/course.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
-import { CourseComponent } from './course/course/course.component';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
-    CourseComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +26,8 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     AuthModule,
-    CoreModule
+    CoreModule,
+    CourseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
