@@ -42,4 +42,12 @@ public class Course {
 		this.name = name;
 	}
 
+	public Set<Semester> getSemesters() {
+		return semesters;
+	}
+
+	public void setSemesters(Set<Semester> semesters) {
+		this.semesters = semesters;
+	}
+
 }

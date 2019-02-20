@@ -17,10 +17,10 @@ export class AccessGuard implements CanActivate {
         state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         
         if(state.url === '/courses' && (this.userService.hasRoleProfessor || this.userService.hasRoleStudent)) {
-            console.log(state.url);  
             return true;
         } if(state.url.search('/course/matrix/') != -1 && (this.userService.hasRoleProfessor || this.userService.hasRoleStudent)) {
-            console.log(state.url);  
+            return true;
+        } if(state.url === '/course/new' && this.userService.hasRoleCoordinator) {
             return true;
         } else {
             alert('User without access!')
