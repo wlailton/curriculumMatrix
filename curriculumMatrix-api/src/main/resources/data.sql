@@ -45,6 +45,26 @@ insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 13);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 14);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 15);
 insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(4, 16);
+
+--Semester Diciplines
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(8, 1);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(8, 2);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(8, 3);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(8, 4);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(7, 5);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(7, 6);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(7, 7);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(7, 8);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(6, 9);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(6, 10);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(6, 11);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(6, 12);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(5, 13);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(5, 14);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(5, 15);
+insert into SEMESTER_DISCIPLINE(semester_id, discipline_id) values(5, 16);
+
+
 -- Roles
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 INSERT INTO roles(name) VALUES('ROLE_COORDINATOR');
