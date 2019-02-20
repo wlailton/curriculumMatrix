@@ -6,6 +6,7 @@ import { SigninComponent } from '../auth/signin/signin.component';
 import { HomeComponent } from '../home/home.component';
 import { MatrixComponent } from '../course/matrix/matrix.component';
 import { CoursesComponent } from '../course/courses/courses.component';
+import { CourseComponent } from '../course/course/course.component';
 import { AuthGuard } from './auth.guard';
 import { AccessGuard } from './access.guard';
 import { IsLoggedGuard } from './is-logged.guard';
@@ -29,6 +30,11 @@ const routes: Routes = [
       path: 'home',
       component: HomeComponent,
       canActivate: [IsLoggedGuard]
+    },
+    { 
+      path: 'course', 
+      component: CourseComponent,
+      canActivate: [IsLoggedGuard, AccessGuard]
     },
     { 
       path: 'courses', 
